@@ -1,0 +1,57 @@
+/* Sidebar container */
+.sidebar {
+  height: 100vh; /* Full viewport height */
+  width: 220px; /* Fixed width for the sidebar */
+  background-color: #f5f5f5; /* Soft neutral background */
+  padding: 20px; /* Padding inside the sidebar */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  position: fixed; /* Fix the sidebar on the left */
+  top: 0; /* Align to the top */
+  left: 0; /* Align to the left */
+  z-index: 1; /* Ensure sidebar is above content */
+}
+
+/* Title styling */
+.sidebar h2 {
+  color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Navigation links */
+.sidebar nav ul {
+  list-style: none; /* Remove bullet points */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+.sidebar nav ul li {
+  margin: 15px 0; /* Space between links */
+}
+
+.sidebar nav ul li a {
+  color: #555; /* Neutral text color */
+  text-decoration: none; /* No underline */
+  font-size: 1.1rem; /* Link font size */
+  padding: 10px 15px; /* Link padding */
+  display: block; /* Make the whole area clickable */
+  border-radius: 8px; /* Rounded corners */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+/* Active and hover states */
+.sidebar nav ul li a:hover,
+.sidebar nav ul li a.active-link {
+  background-color: #007bff; /* Accent color */
+  color: #fff; /* Change text color on hover */
+}
+.back-button {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 20px;
+  color: #007bff; /* Change color as needed */
+  text-decoration: underline;
+}

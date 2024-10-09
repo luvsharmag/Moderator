@@ -1,0 +1,61 @@
+.artist-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align items */
+  padding: 20px;
+  max-width: 600px; /* Limit the width of the detail page */
+  margin: auto; /* Center the component horizontally */
+  border: 1px solid #ccc; /* Add a border for better visibility */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Add some shadow */
+  background-color: #fff; /* White background */
+}
+
+.artist-image {
+  width: 150px; /* Set a fixed width for the image */
+  height: 150px; /* Set a fixed height for the image */
+  border-radius: 75px; /* Circular image */
+  object-fit: cover; /* Cover to maintain aspect ratio */
+  margin-bottom: 20px; /* Space below the image */
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 16px;
+  margin: 5px 0; /* Space above and below each paragraph */
+}
+
+.artist-actions {
+  margin-top: 20px; /* Space above the buttons */
+}
+
+.approve-button,
+.reject-button {
+  padding: 10px 15px; /* Padding for buttons */
+  margin-right: 10px; /* Space between buttons */
+  border: none;
+  border-radius: 5px; /* Rounded corners for buttons */
+  color: #fff; /* White text */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s; /* Smooth background transition */
+}
+
+.approve-button {
+  background-color: #4caf50; /* Green background for approve */
+}
+
+.approve-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+.reject-button {
+  background-color: #f44336; /* Red background for reject */
+}
+
+.reject-button:hover {
+  background-color: #e53935; /* Darker red on hover */
+}
