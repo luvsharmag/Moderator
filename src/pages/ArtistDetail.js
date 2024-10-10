@@ -1,61 +1,94 @@
 import React, { useEffect, useState } from "react";
-import artistService from "../services/artistService"; // Import your service
-import { useParams, useNavigate } from "react-router-dom"; // For route params and navigation
+import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchPendingArtistDetail,
+  updateArtistStatus,
+} from "../features/artists/artistSlice";
 import "./ArtistDetail.css";
+import { toast } from "react-toastify";
 
 const ArtistDetail = () => {
-  const { artistId } = useParams(); // Get artistId from URL params
-  const navigate = useNavigate(); // For navigation
-  const [artist, setArtist] = useState(null);
-  const [error, setError] = useState("");
+  const { artistId } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { artistDetail, error, loading } = useSelector(
+    (state) => state.artists
+  );
+
+  const [isUpdating, setIsUpdating] = useState(false); // State to manage button click
 
   useEffect(() => {
-    const fetchArtistDetail = async () => {
-      try {
-        const data = await artistService.getArtistDetail(artistId);
-        console.log("API Response: ", data); // Log the API response
-        if (data.success) {
-          setArtist(data.data);
-          console.log("Set Artist: ", data.data); // Log the artist data being set
-        } else {
-          setError("Artist not found");
-        }
-      } catch (error) {
-        setError("Error fetching artist detail");
-      }
-    };
-
-    fetchArtistDetail();
-  }, [artistId]);
+    if (artistId) {
+      dispatch(fetchPendingArtistDetail(artistId));
+    }
+  }, [dispatch, artistId]);
 
   const handleUpdateStatus = async (status) => {
+    if (isUpdating) return; // Prevent multiple clicks
+    setIsUpdating(true); // Set updating state
+    console.log(status);
     try {
-      const response = await artistService.updateArtistStatus(artistId, status);
-      if (response.success) {
-        navigate("/artist"); // Navigate back to artist list
-      }
+      console.log("Updating artist status", { artistId, status });
+      const response = await dispatch(
+        updateArtistStatus({ artistId, status })
+      ).unwrap();
+      console.log("Update response:", response);
+
+      toast.success(response.data.message);
     } catch (error) {
-      setError("Error updating artist status");
+      toast.error("Failed to update artist status: " + error.message); // Handle error properly
+    } finally {
+      setIsUpdating(false); // Reset updating state
     }
   };
 
-  if (!artist) return <div>Loading...</div>; // Loading state
-  if (error) return <div>{error}</div>; // Error state
+  if (loading) return <div className="loading-message">Loading...</div>;
+  if (error) return <div className="error-message">{error}</div>;
+
+  // Handle case when artistDetail might be null or undefined
+  if (!artistDetail) {
+    return <div className="error-message">Artist not found.</div>;
+  }
 
   return (
     <div className="artist-detail">
-       ( console.log(artist);)
-      <img src={`http://localhost:4000/images/uifaces-popular-image (1).jpg`} alt="Artist" className="artist-image" /> {/* Static Image */}
-      <h2>{artist.artistName}</h2>
-      <p>Email: {artist.artistEmail}</p>
-      <p>Request Date: {new Date(artist.requestDate).toLocaleDateString()}</p>
-      <p>Profile Status: {artist.profileStatus}</p>
-      <p>Skills: {Array.isArray(artist.skills) ? artist.skills.join(", ") : "N/A"}</p>
-      <p>Title: {artist.title}</p>
-
+      <img
+        src={`http://localhost:4000/images/uifaces-popular-image (1).jpg`}
+        alt="Artist"
+        className="artist-image"
+      />
+      <h2>{artistDetail.artistName || "N/A"}</h2>
+      <p>Email: {artistDetail.artistEmail || "N/A"}</p>
+      <p>
+        Request Date:{" "}
+        {artistDetail.requestDate
+          ? new Date(artistDetail.requestDate).toLocaleDateString()
+          : "N/A"}
+      </p>
+      <p>Profile Status: {artistDetail.profileStatus || "N/A"}</p>
+      <p>
+        Skills:{" "}
+        {Array.isArray(artistDetail.skills)
+          ? artistDetail.skills.join(", ")
+          : "N/A"}
+      </p>
+      <p>Title: {artistDetail.title || "N/A"}</p>
       <div className="artist-actions">
-        <button className="approve-button" onClick={() => handleUpdateStatus("approved")}>Approve</button>
-        <button className="reject-button" onClick={() => handleUpdateStatus("rejected")}>Reject</button>
+        <button
+          className="approve-button"
+          onClick={() => handleUpdateStatus("approved")}
+          disabled={isUpdating} // Disable button while updating
+        >
+          Approve
+        </button>
+        <button
+          className="reject-button"
+          onClick={() => handleUpdateStatus("rejected")}
+          disabled={isUpdating} // Disable button while updating
+        >
+          Reject
+        </button>
       </div>
     </div>
   );

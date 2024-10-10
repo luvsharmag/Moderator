@@ -1,13 +1,13 @@
-import React from 'react'
-import ArtistList from '../../components/ArtistList'
+import React from "react";
+import NewArtistList from "../../components/NewArtistList";
 
-function NewArtists() {
+const NewArtists = () => {
   return (
     <div>
-        New Artist Requests
-        <ArtistList />
+      <h2>New Artists</h2>
+      <NewArtistList  /> {/* Use the NewArtistList */}
     </div>
-  )
-}
+  );
+};
 
-export default NewArtists
+export default NewArtists;

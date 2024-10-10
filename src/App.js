@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Sidebar from './components/Sidebar';
-import ArtistSidebar from './components/ArtistSidebar'; // Import the new ArtistSidebar
-import Artist from './pages/Artist';
-import Brand from './pages/Brand';
-import Proposal from './pages/Proposal';
-import Payment from './pages/Payment';
-import Reports from './pages/Reports';
-import ApprovedArtists from './pages/Artist/ApprovedArtists'; // Assuming you have this page
-import PendingArtists from './pages/Artist/PendingArtists'; // Assuming you have this page
-import RejectedArtists from './pages/Artist/RejectedArtists'; // Assuming you have this page
-import OldArtists from './pages/Artist/OldArtists'; // Assuming you have this page
-import './App.css';
-import NewArtists from './pages/Artist/NewArtists';
-import ArtistDetail from './pages/ArtistDetail';
-
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Sidebar from "./components/Sidebar";
+import ArtistSidebar from "./components/ArtistSidebar"; // Import the new ArtistSidebar
+import Artist from "./pages/Artist";
+import Brand from "./pages/Brand";
+import Proposal from "./pages/Proposal";
+import Payment from "./pages/Payment";
+import Reports from "./pages/Reports";
+import ApprovedArtists from "./pages/Artist/ApprovedArtists"; // Assuming you have this page
+import PendingArtists from "./pages/Artist/PendingArtists"; // Assuming you have this page
+import RejectedArtists from "./pages/Artist/RejectedArtists"; // Assuming you have this page
+import OldArtists from "./pages/Artist/OldArtists"; // Assuming you have this page
+import "./App.css";
+import NewArtists from "./pages/Artist/NewArtists";
+import ArtistDetail from "./pages/ArtistDetail";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   const [showArtistSidebar, setShowArtistSidebar] = useState(false);
 
@@ -49,6 +50,17 @@ function App() {
             <Route path="/reports" element={<Reports />} />
           </Routes>
         </div>
+        <ToastContainer
+          position="top-right" // You can set default position
+          autoClose={3000} // Default auto-close time
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </div>
     </Router>
   );
